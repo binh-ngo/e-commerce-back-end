@@ -12,18 +12,17 @@ router.get('/', (req, res) => {
       attributes: ["id", "product_name", "price", "stock", "category_id"]
     }
   })
-  .then((categoryData => {
+  .then(categoryData => {
     if(!categoryData) {
-      res.status(404).json(
-        {message: 'No categories found.'})
+      res.status(404).json({message: 'No categories found.'})
         return;
     }
     res.json(categoryData);
   })
-    .catch(err => {
+  .catch(err => {
       console.log(err);
       res.status(500).json(err)
-    }));
+    });
 });
 
 router.get('/:id', (req, res) => {
@@ -40,7 +39,7 @@ router.get('/:id', (req, res) => {
   })
     .then(categoryData => {
       if(!categoryData) {
-        res.status(404).json({message: "No categories found."});
+        res.status(404).json({message: "Category with this ID not found."});
         return;
       }
       res.json(categoryData);
@@ -71,7 +70,7 @@ router.put('/:id', (req, res) => {
     }
   })
     .then(categoryData => {
-      if(categoryData) {
+      if(!categoryData) {
         res.status(404).json({message:"Category with this ID not found."});
         return;
       }
